@@ -1,0 +1,18 @@
+/* Splash Web — main stylesheet entry point.
+   Imports all partials in cascade-safe order. */
+
+@import "_variables.css";
+@import "reset.css";
+@import "layout.css";
+@import "buttons.css";
+@import "server-form.css";
+@import "control-bar.css";
+@import "chat-sidebar.css";
+@import "chat-main.css";
+@import "composer.css";
+@import "mcp-tools.css";
+@import "overlays.css";
+@import "connection.css";
+@import "settings-modal.css";
+@import "./transcript.css";
+@import "./transcript-highlight.css";

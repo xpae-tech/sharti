@@ -1,0 +1,70 @@
+/* Syntax highlighting theme for the transcript (maps highlight.js classes to our palette) */
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--secondary);
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag {
+  color: var(--hl-purple);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-template-tag,
+.hljs-char.escape_ {
+  color: var(--hl-red);
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--hl-blue);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: var(--hl-blue);
+}
+
+.hljs-type,
+.hljs-built_in,
+.hljs-class .hljs-title,
+.hljs-title.class_ {
+  color: var(--hl-brown);
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params,
+.hljs-property {
+  color: var(--hl-orange);
+}
+
+.hljs-meta,
+.hljs-meta .hljs-keyword {
+  color: var(--hl-brown);
+}
+
+.hljs-addition {
+  color: var(--hl-green);
+}
+
+.hljs-deletion {
+  color: var(--hl-red);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 600;
+}

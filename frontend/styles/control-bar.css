@@ -1,0 +1,130 @@
+/* Control bar + status mark indicators */
+
+.controlbar {
+  flex: none;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+}
+
+.cb-inner {
+  max-width: calc(var(--col) - 40px);
+  margin: 0 auto;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cb-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cb-model {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--radius-lg);
+  padding: 1px 4px;
+  margin: -1px -4px;
+}
+
+.cb-model.interactive {
+  cursor: pointer;
+  transition: background-color var(--quick);
+}
+
+.cb-model.interactive:hover {
+  background: var(--hover);
+}
+
+.cb-detail {
+  font-size: 13px;
+  color: var(--secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cb-actions {
+  display: flex;
+  gap: 8px;
+  flex: none;
+}
+
+/* ── Status mark ──────────────────────────────────────────────── */
+.mark {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: var(--radius-circle);
+}
+
+.mark .core {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-circle);
+}
+
+.mark[data-look="off"] .core {
+  background: var(--quaternary);
+}
+
+.mark[data-look="on"] .core {
+  background: var(--ok);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 50%, transparent);
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+.mark[data-look="asleep"] .core {
+  background: var(--tertiary);
+}
+
+.mark[data-look="failed"] .core {
+  background: var(--danger);
+}
+
+.mark[data-look="loading"] {
+  background: conic-gradient(from 0deg, var(--tint), transparent 70%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), var(--mask-paint) calc(100% - 2.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), var(--mask-paint) calc(100% - 2.5px));
+  animation: spin .9s linear infinite;
+}
+
+.mark[data-look="loading"] .core {
+  display: none;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+
+.mark.sm {
+  width: 12px;
+  height: 12px;
+}
+
+.mark.xl {
+  width: 44px;
+  height: 44px;
+}
+
+.mark.xl[data-look="loading"] {
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), var(--mask-paint) calc(100% - 4px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), var(--mask-paint) calc(100% - 4px));
+}

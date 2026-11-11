@@ -1,0 +1,40 @@
+{
+  "name": "sharti",
+  "version": "1.36.2",
+  "description": "Independent web service for working with Splash inference engine and external providers",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"tsx watch backend/src/index.ts\"",
+    "dev:vite": "vite",
+    "dev:server": "tsx watch backend/src/index.ts",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "tsup backend/src/index.ts --format esm --clean --dts",
+    "build:frontend": "vite build",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p frontend/tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.5",
+    "hono": "^4.7.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/markdown-it": "^14.2.0",
+    "@types/node": "^22.15.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.39.5",
+    "highlight.js": "^11.11.0",
+    "markdown-it": "^14.1.0",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^6.3.0",
+    "vitest": "^5.0.5"
+  }
+}

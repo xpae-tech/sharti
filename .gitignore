@@ -1,0 +1,21 @@
+node_modules/
+dist/
+*.log
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Editor, agent and tooling state
+.kilo/
+.vscode/
+.idea/
+coverage/
+
+# Runtime data (chats, uploads, preferences, MCP configuration)
+/data/folders/*
+/data/chats/*
+/data/mcp/*
+/data/*.json
+!/data/chats/.gitkeep

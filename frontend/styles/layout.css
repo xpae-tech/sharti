@@ -1,0 +1,34 @@
+/* App shell: window frame and panes */
+
+#win {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-window);
+  padding: 25px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Body / panes ─────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.pane {
+  position: absolute;
+  inset: 0;
+  display: none;
+  gap: 25px;
+  padding: 0;
+}
+
+.pane.active {
+  display: flex;
+}

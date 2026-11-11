@@ -1,0 +1,346 @@
+/* Overlay components: popups, sheets/modals, toast */
+
+/* ── Popups / menus ───────────────────────────────────────────── */
+.popup {
+  position: fixed;
+  z-index: 300;
+  min-width: 180px;
+  max-width: 320px;
+  background: var(--card-elevated);
+  box-shadow: var(--shadow-popup), inset 0 0 0 0.5px var(--separator);
+  border-radius: var(--radius-lg);
+  padding: 5px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translateY(-4px) scale(.98);
+  transform-origin: top;
+  pointer-events: none;
+  transition: opacity var(--quick), transform var(--quick);
+}
+
+.popup.open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.popup-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+}
+
+.popup-item:hover {
+  background: var(--tint);
+  color: var(--on-tint);
+}
+
+.popup-item .chk {
+  width: 16px;
+  flex: none;
+}
+
+.popup-item .badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  flex: none;
+  padding: 2px 8px;
+  border-radius: var(--radius-lg);
+  background: var(--tint-tinted);
+  color: var(--tint);
+  white-space: nowrap;
+}
+
+.popup-item:hover .badge {
+  background: color-mix(in srgb, var(--on-tint) 20%, transparent);
+  color: var(--on-tint);
+}
+
+.popup-sep {
+  height: 1px;
+  background: var(--separator);
+  margin: 5px 4px;
+  opacity: .6;
+}
+
+/* ── Sheets / modals ──────────────────────────────────────────── */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--backdrop);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--quick);
+}
+
+.sheet-backdrop.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sheet {
+  width: 560px;
+  max-width: 100%;
+  background: var(--bg-panel);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transform: translateY(12px) scale(.97);
+  transition: transform var(--spring);
+}
+
+.sheet-backdrop.open .sheet {
+  transform: none;
+}
+
+.sheet-head {
+  padding: 20px 24px 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--label);
+  background: var(--sheet-body);
+  margin: -0px -0px 0;
+}
+
+.sheet-body {
+  padding: 10px 24px 16px;
+  background: var(--sheet-body);
+}
+
+.sheet-foot-note {
+  padding: 0 24px 14px;
+  font-size: 12px;
+  background: var(--sheet-body);
+  color: var(--secondary);
+  line-height: 1.4;
+}
+
+.sheet-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--separator);
+  background: var(--sheet-bar);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.sheet input.big {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  font-size: 14px;
+  transition: border-color var(--quick), box-shadow var(--quick);
+}
+
+.sheet input.big:focus {
+  border-color: var(--tint);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+  outline: none;
+}
+
+.confirm-dialog {
+  width: 400px;
+}
+
+.confirm-dialog .sheet-body {
+  font-size: 14px;
+  color: var(--secondary);
+  line-height: 1.45;
+}
+
+.dup-hint {
+  font-size: 13px;
+  color: var(--secondary);
+  margin-top: 10px;
+}
+
+/* ── Toast ────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(10px);
+  z-index: 300;
+  background: var(--card-elevated);
+  box-shadow: var(--shadow-toast), inset 0 0 0 .5px var(--separator);
+  border-radius: var(--radius-lg);
+  padding: 10px 16px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--quick), transform var(--quick);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+/* ── Image Preview Modal ─────────────────────────────────────── */
+.img-preview-sheet {
+  width: 100%;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: var(--image-preview-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: scale(.95);
+  transition: transform var(--spring);
+}
+
+.sheet-backdrop.open .img-preview-sheet {
+  transform: none;
+}
+
+.img-preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--sheet-bar);
+  border-bottom: 1px solid var(--separator);
+}
+
+.ip-spacer {
+  flex: 1;
+}
+
+/* Buttons styled like sm-close: round, subtle, hover-aware */
+.ip-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--radius-circle);
+  background: transparent;
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--quick), color var(--quick);
+}
+
+.ip-btn svg {
+  flex: none;
+}
+
+.ip-btn span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ip-btn:hover {
+  background: var(--hover);
+  color: var(--label);
+}
+
+.ip-close {
+  padding: 0;
+  min-width: 28px;
+  width: 28px;
+}
+
+.ip-finder {
+  border-radius: var(--radius-md);
+  padding: 0 10px 0 8px;
+}
+
+.img-preview-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  min-height: 200px;
+  overflow: auto;
+}
+
+.img-preview-body img {
+  max-width: 100%;
+  max-height: calc(90vh - 100px);
+  object-fit: contain;
+  border-radius: var(--radius-xs);
+}
+
+/* ── About dialog ────────────────────────────────────────────── */
+.about-sheet {
+  width: 400px;
+  text-align: center;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 30px 30px 14px;
+}
+
+.about-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-logo {
+  display: block;
+  width: 132px;
+  height: auto;
+}
+
+.about-description {
+  max-width: 320px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--secondary);
+}
+
+.about-signature {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tertiary);
+}
+
+.about-bar {
+  justify-content: center;
+  border-top: 0;
+  background: transparent;
+  padding: 0 30px 22px;
+}
+
+.about-footer {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: max-content;
+  max-width: 100%;
+}

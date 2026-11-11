@@ -1,0 +1,411 @@
+/* Tools Bar: horizontally-scrollable chips below the composer */
+
+.tools-bar {
+  flex: none;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  padding: 6px 0 0;
+}
+
+/* Horizontal scroller hosting the connectable MCP chips.
+   Standard lg radius, scrollbar intentionally hidden. */
+.tools-scroll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: var(--radius-lg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tools-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Base chip ────────────────────────────────────────────────────────────── */
+
+.tool-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  transition: background-color var(--quick), border-color var(--quick), color var(--quick);
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+}
+
+.tool-chip:hover {
+  background: var(--chip-bg-hover);
+  border-color: var(--chip-border-hover);
+}
+
+/* Active state: subtle tint shift, no bold fill */
+.tool-chip.active {
+  border-color: var(--chip-border-active);
+  color: var(--label);
+}
+
+.tool-chip.active:hover {
+  background: var(--chip-bg-hover);
+  border-color: var(--chip-border-active-hover);
+}
+
+/* ── Status mark (circle indicator) ──────────────────────────────────────── */
+
+.chip-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--quaternary);
+  flex-shrink: 0;
+  transition: background-color var(--quick);
+}
+
+.tool-chip.active .chip-mark {
+  background: var(--tint);
+}
+
+/* ── Separator / chip spacing ─────────────────────────────── */
+
+/* ── sharti-agent chip ───────────────────────────────────────────────────── */
+/* Only the active state differs; base, hover and focus styles are shared
+   with the regular chips above. */
+.tool-chip.chip-sticky.active {
+  background: linear-gradient(135deg, var(--tint) 0%, color-mix(in srgb, var(--tint) 70%, var(--on-tint)) 100%);
+  border-color: var(--tint);
+  color: var(--on-tint);
+}
+
+.tool-chip.chip-sticky.active:hover {
+  background: linear-gradient(135deg, var(--tint-press) 0%, color-mix(in srgb, var(--tint-press) 70%, var(--on-tint)) 100%);
+  border-color: var(--tint-press);
+}
+
+.tool-chip.chip-sticky.active .chip-mark {
+  background: color-mix(in srgb, var(--on-tint) 85%, transparent);
+}
+
+/* ── Separator ───────────────────────────────────────────────────────────── */
+
+.tools-separator {
+  width: 1px;
+  height: 20px;
+  background: var(--chip-separator);
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+/* ── Label truncation ────────────────────────────────────────────────────── */
+
+.chip-label {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Plugins & MCP settings cards ────────────────────────────────────────── */
+
+.tool-card-body {
+  padding: 14px 20px 18px;
+}
+
+.tool-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  min-height: 112px;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-tool);
+  background: var(--card);
+  color: var(--label);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--quick), border-color var(--quick), box-shadow var(--quick), transform var(--quick);
+}
+
+.tool-card:hover {
+  background: var(--fill-control-active);
+  border-color: var(--tint);
+  box-shadow: var(--shadow-s);
+  transform: translateY(-1px);
+}
+
+.tool-card:active {
+  transform: scale(.99);
+}
+
+.tool-card:focus-visible {
+  outline: 2px solid var(--tint);
+  outline-offset: 2px;
+}
+
+.tool-card.active {
+  border-color: color-mix(in srgb, var(--tint) 55%, var(--separator));
+}
+
+.tool-card.disabled {
+  border-color: var(--tertiary);
+  color: var(--secondary);
+}
+
+.tool-card-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+}
+
+.tool-card .conn-dot {
+  width: 8px;
+  height: 8px;
+}
+
+.tool-card.disabled .conn-dot {
+  background: transparent;
+  border: 1.5px solid var(--tertiary);
+  box-shadow: none;
+}
+
+.tool-card-name {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-card-detail {
+  width: 100%;
+  overflow: hidden;
+  color: var(--tertiary);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-card-desc {
+  display: -webkit-box;
+  width: 100%;
+  max-height: calc(1.35em * 3);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  color: var(--secondary);
+  font-size: 11px;
+  line-height: 1.35;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.tool-card-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.tool-card-status-label {
+  color: var(--tertiary);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.tool-card[data-status="active"] .tool-card-status-label {
+  color: var(--tint);
+}
+
+@media (max-width: 640px) {
+  .tool-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tool-card-disable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: -4px -4px -4px 0;
+  border-radius: var(--radius-circle);
+  color: var(--tertiary);
+  cursor: pointer;
+  transition: background-color var(--quick), color var(--quick);
+}
+
+.tool-card-disable:hover {
+  background: var(--hover);
+  color: var(--label);
+}
+
+.tool-card-disable-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+}
+
+.tool-card-disable-icon.is-disabled .glyph.wrench {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.7 3.3a3.5 3.5 0 0 1-4.6 4.6L4 13a1.5 1.5 0 0 1-2.1-2.1l5.1-5.1a3.5 3.5 0 0 1 4.6-4.6L9.5 3.5l1.5 1.5 2.7-1.7z' fill='none' stroke='%23000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.7 3.3a3.5 3.5 0 0 1-4.6 4.6L4 13a1.5 1.5 0 0 1-2.1-2.1l5.1-5.1a3.5 3.5 0 0 1 4.6-4.6L9.5 3.5l1.5 1.5 2.7-1.7z' fill='none' stroke='%23000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* ── mcp.json editor ──────────────────────────────────────────────────────── */
+
+.mcp-config-card {
+  overflow: hidden;
+}
+
+.mcp-config-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px 8px;
+  color: var(--label);
+  cursor: pointer;
+  text-align: left;
+}
+
+.mcp-config-toggle .section-title {
+  flex: none;
+}
+
+.mcp-config-toggle .chev {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.2 2.6 8 6l-3.8 3.4' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.2 2.6 8 6l-3.8 3.4' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+  transition: transform var(--settle);
+}
+
+.mcp-config-toggle.open .chev {
+  transform: rotate(90deg);
+}
+
+.mcp-config-path {
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  color: var(--tertiary);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mcp-config-fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--settle);
+}
+
+.mcp-config-card.open .mcp-config-fold {
+  grid-template-rows: 1fr;
+}
+
+.mcp-config-fold-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mcp-config-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 20px 18px;
+}
+
+.mcp-config-editor-wrap {
+  overflow: hidden;
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-md);
+  background: var(--fill-control);
+  transition: border-color var(--quick), box-shadow var(--quick);
+}
+
+.mcp-config-editor-wrap:focus-within {
+  border-color: var(--tint);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.mcp-config-editor {
+  display: block;
+  width: 100%;
+  min-height: 160px;
+  max-height: 420px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--label);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  white-space: pre;
+}
+
+.mcp-config-editor:focus {
+  outline: none;
+}
+
+.mcp-config-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mcp-config-state {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--secondary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mcp-config-state.error {
+  color: var(--danger);
+}

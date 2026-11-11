@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1a1a" id="themeColor">
+  <title>Sharti</title>
+
+  <!-- Apply the cached theme before the first paint to avoid a theme flash. -->
+  <script>
+    (function () {
+      var theme = 'dark';
+      try {
+        var stored = localStorage.getItem('sharti-theme');
+        if (stored === 'light' || stored === 'dark') theme = stored;
+      } catch (e) { /* storage may be unavailable */ }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23666aaa'/%3E%3Cpath d='M50 22c-14 0-25 9-25 22 0 16 25 34 25 34s25-18 25-34c0-13-11-22-25-22z' fill='none' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+
+  <!-- Prefetch stylesheet: warms the cache in parallel with JS module graph -->
+  <link rel="prefetch" as="style" href="/styles/main.css">
+
+  <!-- Critical inline styles: eliminate FOUC (white flash before JS-loaded CSS applies).
+       Only the two bootstrap colours are duplicated here; every component style uses the
+       tokens from styles/_variables.css. -->
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      -webkit-font-smoothing: antialiased
+    }
+
+    :root {
+      --boot-bg: #1a1a1a;
+      --boot-label: #e8e8e8
+    }
+
+    html[data-theme="light"] {
+      --boot-bg: #e0e0e0;
+      --boot-label: #1f2328
+    }
+
+    body {
+      background: var(--boot-bg);
+      color: var(--boot-label)
+    }
+
+    #win {
+      opacity: 0;
+      transition: opacity .25s ease-out
+    }
+
+    #win.ready {
+      opacity: 1
+    }
+  </style>
+</head>
+
+<body>
+  <div id="win">
+    <main class="body">
+      <!-- ══ CHAT ══ -->
+      <section class="pane pane-chat active" id="paneChat">
+        <aside class="chat-sidebar">
+          <div class="sidebar-header">
+            <div class="logo">
+              <img src="/assets/xpae-logo.svg" alt="Sharti logo" height="23" />
+            </div>
+            <button class="app-version" id="appVersion" type="button" title="About Sharti"></button>
+          </div>
+          <div class="search-wrap">
+            <span class="mag"></span>
+            <input id="chatSearch" type="text" placeholder="Search" autocomplete="off" spellcheck="false">
+          </div>
+          <button class="new-folder-btn" id="newFolderBtn" title="New Folder"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+            </svg>New folder</button>
+          <button class="new-chat-btn" id="newChatBtn" title="New Chat (⌘N)"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5l3 3L7 19l-4 1 1-4Z" />
+            </svg>New chat</button>
+          <div class="conv-list" id="convList"></div>
+        </aside>
+        <div class="chat-main">
+          <div class="conv-stage" id="convStage">
+            <div class="empty-state" id="emptyState">
+              <span class="mark xl" id="emptyMark" data-look="off"><span class="core"></span></span>
+              <div class="hint" id="emptyHint">No model running.</div>
+            </div>
+          </div>
+          <div class="composer-zone" id="composerZone">
+            <footer class="composer" id="composerWrap">
+              <div class="composer-card">
+                <div class="attach-row" id="attachRow" hidden></div>
+                <textarea class="composer-input" id="composerInput" rows="1" placeholder="Enter your query"
+                  spellcheck="true"></textarea>
+                <div class="composer-bar">
+                  <button class="plus-btn" id="attachPlus" hidden title="Attach Images or PDFs">+</button>
+                  <button class="engine-slot" id="engineSlot" title="Open Settings (⌘,)">
+                    <span class="mark sm" id="engineMark" data-look="off"><span class="core"></span></span>
+                    <span class="etxt" id="engineText">No model running</span>
+                  </button>
+                  <button class="gear-inline" id="settingsGear" title="Settings (⌘,)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3" />
+                      <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                  </button>
+                  <span class="spacer"></span>
+                  <button class="menu-btn" id="effortMenu" hidden
+                    title="How much the model thinks before it answers"><span id="effortLabel">Thinking</span><span
+                      class="chev"></span></button>
+                  <button class="send-circle" id="sendBtn" disabled title="Send"><span
+                      class="arrow">&#8593;</span></button>
+                </div>
+              </div>
+            </footer>
+            <div class="tools-bar" id="toolsBar" hidden></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="settings-modal" id="settingsModal">
+    <div class="sm-backdrop" id="smBackdrop"></div>
+    <div class="sm-panel">
+      <div class="sm-header">
+        <div class="sm-header-main">
+          <h2>Settings</h2>
+          <div class="sm-tabs" role="tablist" aria-label="Settings sections">
+            <button class="sm-tab active" id="settingsTabConnection" role="tab" aria-selected="true">Connection</button>
+            <button class="sm-tab" id="settingsTabTuning" role="tab" aria-selected="false">Model Tuning</button>
+            <button class="sm-tab" id="settingsTabPlugins" role="tab" aria-selected="false">Plugins &amp; MCP</button>
+            <button class="sm-tab" id="settingsTabSystem" role="tab" aria-selected="false">System</button>
+          </div>
+        </div>
+        <button class="sm-close" id="settingsClose" title="Close"><svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg></button>
+      </div>
+      <div class="sm-body">
+        <div class="form-scroll" id="serverScroll">
+          <div class="form-col" id="serverForm"><!-- sections injected --></div>
+        </div>
+        <div class="controlbar" id="controlBar" hidden>
+          <div class="cb-inner">
+            <span class="mark" id="cbMark" data-look="off"><span class="core"></span></span>
+            <div class="cb-info">
+              <div class="cb-model" id="cbModel">&nbsp;</div>
+              <div class="cb-detail" id="cbDetail">Not running</div>
+            </div>
+            <div class="cb-actions" id="cbActions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="toast" id="toast" hidden></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

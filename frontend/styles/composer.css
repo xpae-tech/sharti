@@ -1,0 +1,301 @@
+/* Composer Zone: shared container for tools-bar + composer */
+.composer-zone {
+  flex: none;
+  padding: 0 15px 15px;
+  max-width: calc(var(--chat-col) + 30px);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Composer: input area, attachments, send button, generating waves */
+
+.composer {
+  flex: none;
+}
+
+.composer-card {
+  background: var(--bg-panel);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  box-shadow: var(--shadow-s);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+/* Wave gradient border — only visible & animated during generation */
+.composer-card::before,
+.composer-card::after {
+  content: "";
+  position: absolute;
+  inset: -2.5px;
+  border-radius: var(--radius-lg);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.composer-card.generating::before {
+  opacity: 1;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      var(--wave-low) 8%,
+      var(--wave-mid) 18%,
+      var(--wave-high) 25%,
+      var(--wave-mid) 32%,
+      var(--wave-low) 42%,
+      transparent 50%,
+      transparent 50%,
+      var(--wave-low) 58%,
+      var(--wave-mid) 68%,
+      var(--wave-high) 75%,
+      var(--wave-mid) 82%,
+      var(--wave-low) 92%,
+      transparent 100%);
+  background-size: 100% 200%;
+  animation: composer-waves-up 4s linear infinite;
+}
+
+.composer-card.generating::after {
+  opacity: 1;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      var(--wave-low-alt) 10%,
+      var(--wave-mid-alt) 25%,
+      var(--wave-low-alt) 40%,
+      transparent 50%,
+      transparent 50%,
+      var(--wave-low-alt) 60%,
+      var(--wave-mid-alt) 75%,
+      var(--wave-low-alt) 90%,
+      transparent 100%);
+  background-size: 100% 200%;
+  animation: composer-waves-up-alt 5.5s linear infinite;
+  mix-blend-mode: var(--wave-blend);
+}
+
+@keyframes composer-waves-up {
+  from {
+    background-position-y: 0%;
+  }
+
+  to {
+    background-position-y: 100%;
+  }
+}
+
+@keyframes composer-waves-up-alt {
+  from {
+    background-position-y: 100%;
+  }
+
+  to {
+    background-position-y: 0%;
+  }
+}
+
+.attach-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 4px 2px;
+}
+
+.thumb {
+  position: relative;
+  flex: none;
+}
+
+.thumb img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--separator);
+  display: block;
+}
+
+.thumb .rm {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-circle);
+  background: var(--danger);
+  color: var(--on-tint);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: var(--shadow-thumb);
+  cursor: pointer;
+}
+
+.thumb.file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 75px;
+  height: 75px;
+  padding: 6px;
+  border: 2px solid var(--separator);
+  border-radius: var(--radius-lg);
+  background: var(--fill-control);
+}
+
+.thumb.file .file-ext {
+  color: var(--link);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .4px;
+}
+
+.thumb.file .file-name {
+  width: 100%;
+  overflow: hidden;
+  color: var(--tertiary);
+  font-size: 9px;
+  line-height: 11px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-input {
+  resize: none;
+  border: none;
+  background: none;
+  font-size: 15px;
+  line-height: 1.5;
+  max-height: 220px;
+  min-height: 22px;
+  padding: 2px 0;
+}
+
+.composer-input::placeholder {
+  color: var(--tertiary);
+}
+
+.composer-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.composer-bar>*:not(.spacer) {
+  flex-shrink: 0;
+}
+
+.plus-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-circle);
+  color: var(--secondary);
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--quick);
+  flex: none;
+}
+
+.plus-btn:hover {
+  background: var(--hover);
+}
+
+.engine-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--secondary);
+  padding: 5px 10px;
+  border-radius: var(--radius-lg);
+  max-width: 45%;
+  transition: background-color var(--quick);
+}
+
+.engine-slot:hover {
+  background: var(--hover);
+}
+
+.engine-slot .etxt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.engine-slot .open-link {
+  color: var(--tint);
+  flex: none;
+}
+
+.spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--secondary);
+  padding: 5px 10px;
+  border-radius: var(--radius-lg);
+  transition: background-color var(--quick);
+}
+
+.menu-btn:hover {
+  background: var(--hover);
+}
+
+.menu-btn .chev {
+  width: 7px;
+  height: 7px;
+  background: var(--secondary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 4.2 6 8l3.4-3.8' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 4.2 6 8l3.4-3.8' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+}
+
+.send-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-circle);
+  background: var(--label);
+  color: var(--card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  transition: opacity var(--quick), transform var(--quick);
+}
+
+.send-circle:disabled {
+  opacity: .4;
+}
+
+.send-circle:active:not(:disabled) {
+  transform: scale(.94);
+}
+
+.send-circle .arrow {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.send-circle.stopping {
+  background: var(--danger);
+}
+
+.send-circle.stopping .arrow {
+  font-size: 10px;
+}

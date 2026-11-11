@@ -1,0 +1,137 @@
+/* Shared button styles: primary, link, gear, dots */
+
+/* Primary button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--fill-control);
+  color: var(--label);
+  border: 1px solid var(--separator);
+  transition: background-color var(--quick), box-shadow var(--quick), border-color var(--quick);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--fill-control-active);
+  border-color: var(--tint);
+}
+
+.btn:active {
+  box-shadow: var(--shadow-s);
+}
+
+.btn:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.btn.prominent {
+  background: var(--tint);
+  color: var(--on-tint);
+  border-color: var(--tint);
+}
+
+.btn.prominent:hover {
+  background: var(--tint-press);
+  border-color: var(--tint-press);
+  box-shadow: var(--shadow-m);
+}
+
+.btn:disabled:hover {
+  background: var(--fill-control);
+  border-color: var(--separator);
+  box-shadow: none;
+}
+
+.btn.prominent:disabled:hover {
+  background: var(--tint);
+  border-color: var(--tint);
+  box-shadow: none;
+}
+
+.btn.danger {
+  color: var(--danger);
+}
+
+.btn.sm {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+/* Link-style button */
+.link-btn {
+  color: var(--tint);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: var(--radius-lg);
+  transition: background-color var(--quick);
+}
+
+.link-btn:hover {
+  background: var(--tint-tinted);
+}
+
+.link-btn:disabled {
+  color: var(--tertiary);
+  cursor: default;
+  background: none;
+}
+
+
+
+.gear-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-lg);
+  color: var(--secondary);
+  transition: background-color var(--quick), color var(--quick);
+  flex: none;
+}
+
+.gear-inline:hover {
+  background: var(--hover);
+  color: var(--label);
+}
+
+.gear-inline:active {
+  background: var(--quaternary);
+}
+
+/* Three-dots menu button */
+.dots-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-lg);
+  color: var(--tertiary);
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: background-color var(--quick), color var(--quick), opacity var(--quick);
+  flex: none;
+  opacity: 0;
+}
+
+.dots-btn:hover {
+  background: var(--hover);
+  color: var(--label);
+}
+
+.model-row:hover .dots-btn,
+.conv-row:hover .dots-btn,
+.folder-header:hover .dots-btn {
+  opacity: 1;
+}

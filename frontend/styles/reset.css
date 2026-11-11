@@ -1,0 +1,65 @@
+/* Base resets, scrollbar styling, selection */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg-window);
+  color: var(--label);
+  font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+button {
+  cursor: default;
+}
+
+button:enabled {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tint);
+  border-radius: var(--radius-lg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tint-press);
+  box-shadow: var(--shadow-s);
+}
+
+::selection {
+  background: var(--selection);
+}

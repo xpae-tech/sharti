@@ -1,0 +1,341 @@
+/* Chat sidebar: header, search, conversation list, folders, drag & drop */
+
+.pane-chat {
+  background: transparent;
+}
+
+.chat-sidebar {
+  flex: none;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  clip-path: inset(0 round var(--radius-lg));
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 14px 0;
+  margin-bottom: 15px;
+}
+
+.sidebar-header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.app-version {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: var(--radius-lg);
+  font-size: 0.55rem;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--link);
+  background: color-mix(in srgb, var(--link) 12%, transparent);
+  transition: background-color var(--quick), color var(--quick);
+}
+
+.app-version:hover {
+  background: color-mix(in srgb, var(--link) 22%, transparent);
+  color: var(--label);
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 10px 4px;
+  padding: 8px 12px;
+  background: var(--fill-control);
+  border-radius: var(--radius-lg);
+}
+
+.search-wrap .mag {
+  width: 13px;
+  height: 13px;
+  background-color: var(--secondary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M11 11l3.5 3.5' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M11 11l3.5 3.5' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/contain;
+}
+
+.search-wrap input {
+  flex: 1;
+  font-size: 13px;
+}
+
+/* ── Action buttons ─────────────────────────────────────────────────────── */
+
+.new-folder-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 6px 10px 2px;
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--label);
+  background: var(--fill-control);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background var(--quick), border-color var(--quick);
+}
+
+.new-folder-btn svg {
+  flex: none;
+  color: var(--label);
+}
+
+.new-folder-btn:hover {
+  background: var(--fill-control-active);
+  border-color: var(--tint);
+}
+
+.new-chat-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 2px 10px 4px;
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--label);
+  background: var(--fill-control);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background var(--quick), border-color var(--quick);
+}
+
+.new-chat-btn svg {
+  flex: none;
+  color: var(--label);
+}
+
+.new-chat-btn:hover:not(:disabled) {
+  background: var(--fill-control-active);
+  border-color: var(--tint);
+}
+
+.new-chat-btn:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+/* ── Conversation list ──────────────────────────────────────────────────── */
+
+.conv-list {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.conv-row {
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color var(--quick);
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: grab;
+}
+
+.conv-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The menu is zero-width until the row is hovered. Growing it shifts the badge
+   left; hiding it returns the badge to its original position. */
+.conv-actions {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.conv-actions .dots-btn {
+  width: 0;
+  min-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    width var(--quick),
+    margin-left var(--quick),
+    opacity var(--quick),
+    background-color var(--quick),
+    color var(--quick);
+}
+
+.conv-row:hover .conv-actions .dots-btn {
+  width: 24px;
+  margin-left: 2px;
+  opacity: 1;
+}
+
+.conv-ctx {
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--hover);
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  cursor: default;
+  transition: color var(--quick), background-color var(--quick);
+}
+
+.conv-ctx.critical {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, var(--fill-control));
+}
+
+.conv-row:hover {
+  background: var(--hover);
+}
+
+.conv-row.open {
+  background: var(--sel);
+}
+
+.conv-row.dragging {
+  opacity: 0.4;
+}
+
+/* ── Zones & Folders ────────────────────────────────────────────────────── */
+
+.zone-general {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  transition: outline-color var(--quick);
+}
+
+.zone-placeholder {
+  height: 36px;
+  border-radius: var(--radius-lg);
+  outline-offset: -1.5px;
+  transition: outline-color var(--quick);
+}
+
+.zone-general.drop-highlight .zone-placeholder {
+  outline-color: var(--tint);
+}
+
+.folder-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  transition: outline-color var(--quick);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--quick);
+}
+
+.folder-header:hover {
+  background: var(--hover);
+}
+
+.folder-chevron {
+  color: var(--secondary);
+  transition: transform var(--settle);
+  transform: translateY(1px);
+}
+
+.folder-header.open .folder-chevron {
+  transform: translateY(1px) rotate(90deg);
+}
+
+.folder-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-chats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 14px;
+}
+
+.folder-empty {
+  height: 36px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--tertiary);
+}
+
+/* ── D&D Highlight ──────────────────────────────────────────────────────── */
+
+/* Base outline is transparent so the colour transition never flashes white. */
+[data-drop-target] {
+  outline: 1.5px solid transparent;
+  outline-offset: -1.5px;
+  transition: outline-color var(--quick);
+}
+
+.drop-highlight {
+  outline-color: var(--tint);
+}
+
+/* Neutralise default focus rings that briefly flash white during drag-over. */
+.conv-row:focus,
+.folder-header:focus,
+.dots-btn:focus,
+.new-folder-btn:focus,
+.new-chat-btn:focus {
+  outline: none;
+}
+
+/* ── Misc ───────────────────────────────────────────────────────────────── */
+
+/* Empty list / search state */
+.req-empty {
+  font-size: 13px;
+  color: var(--tertiary);
+  padding: 6px 0;
+}

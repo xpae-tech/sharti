@@ -1,0 +1,266 @@
+/* Server sub-navigation: breadcrumb, connection cards, API form */
+
+/* ═══ Server Sub-Navigation ═══ */
+.srv-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--label);
+}
+
+.srv-desc {
+  font-size: 14px;
+  color: var(--secondary);
+  margin-top: -12px;
+  margin-bottom: 4px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--secondary);
+  user-select: none;
+}
+
+.bc-back {
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--tint);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-lg);
+  transition: background .12s;
+}
+
+.bc-back:hover {
+  background: var(--tint-tinted);
+}
+
+.bc-sep {
+  color: var(--tertiary);
+}
+
+.bc-current {
+  font-weight: 500;
+  color: var(--label);
+}
+
+/* Connection method cards */
+.conn-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  position: relative;
+}
+
+.conn-card:hover {
+  border-color: var(--tint);
+  box-shadow: var(--shadow-tint);
+  transform: translateY(-1px);
+}
+
+.conn-card:active {
+  transform: scale(.99);
+}
+
+/* Connection status dot */
+.conn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--quaternary);
+  flex: none;
+}
+
+.conn-dot.active {
+  background: var(--ok);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--ok) 50%, transparent);
+}
+
+.conn-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--fill-control);
+  color: var(--tint);
+}
+
+.conn-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.conn-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.conn-title-row .conn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--quaternary);
+  flex: none;
+}
+
+.conn-title-row .conn-dot.active {
+  background: var(--ok);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--ok) 50%, transparent);
+}
+
+.conn-info h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--label);
+}
+
+.conn-info p {
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0;
+  color: var(--secondary);
+}
+
+.conn-arrow {
+  font-size: 20px;
+  color: var(--tertiary);
+  flex-shrink: 0;
+}
+
+/* API form */
+.api-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 0 16px;
+}
+
+.api-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 20px;
+}
+
+/* Edit sheet is already inside a padded .sheet-body. */
+.api-form-sheet .api-field {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.api-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--label);
+}
+
+.api-help {
+  font-size: 12px;
+  color: var(--tertiary);
+  margin-top: 0;
+}
+
+.api-clear-key {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 20px 10px;
+  font-size: 13px;
+  color: var(--secondary);
+  cursor: pointer;
+}
+
+.api-form-sheet .api-clear-key {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.api-clear-key input {
+  accent-color: var(--tint);
+}
+
+.api-clear-key.disabled {
+  color: var(--tertiary);
+  cursor: default;
+}
+
+.api-clear-key input:disabled {
+  cursor: default;
+}
+
+.api-url {
+  font-size: 14px;
+  width: 100%;
+  min-width: unset;
+  max-width: unset;
+  height: 38px;
+  padding: 0 12px;
+  text-align: left;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  background: var(--card);
+  transition: border-color var(--quick), box-shadow var(--quick);
+}
+
+.api-url:focus {
+  border-color: var(--tint);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+  outline: none;
+}
+
+.api-name {
+  font-size: 14px;
+  width: 100%;
+  min-width: unset;
+  max-width: unset;
+  height: 38px;
+  padding: 0 12px;
+  text-align: left;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--separator);
+  background: var(--card);
+  transition: border-color var(--quick), box-shadow var(--quick);
+}
+
+.api-name:focus {
+  border-color: var(--tint);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+  outline: none;
+}
+
+.api-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0;
+  padding: 14px 20px 0;
+}
+
+.api-form-sheet .api-btns {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.api-busy {
+  font-size: 13px;
+  color: var(--danger);
+  word-break: break-all;
+}
