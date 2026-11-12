@@ -2,6 +2,7 @@
 
 import { esc } from '../core/dom.js';
 import { UI_TIMING } from '../core/config.js';
+import logoUrl from '../../assets/sharti-name.svg';
 
 export function openAbout(sheetBackdrop: HTMLDivElement, version: string): void {
   const bd = sheetBackdrop;
@@ -9,7 +10,7 @@ export function openAbout(sheetBackdrop: HTMLDivElement, version: string): void 
     <div class="sheet about-sheet" role="dialog" aria-modal="true" aria-label="About Sharti">
       <div class="about-content">
         <div class="about-brand">
-          <img class="about-logo" src="/assets/xpae-logo.svg" alt="Sharti" />
+          <img class="about-logo" src="${logoUrl}" alt="Sharti" />
           <span class="app-version">${esc(version)}</span>
         </div>
         <p class="about-description">Sharti is a private client for working with AI models through Splash Engine and any OpenAI-compatible API.</p>

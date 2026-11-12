@@ -1,10 +1,26 @@
+<div align="center">
+  <picture>
+    <img src="./docs/img/sharti-header.svg" alt="Sharti logo">
+  </picture>
+
+  <p>
+    <a href="https://github.com/xpae-tech/sharti/releases">
+      <img src="https://img.shields.io/github/v/release/xpae-tech/sharti?style=flat-square" alt="Latest release">
+    </a>
+    <a href="https://github.com/xpae-tech/sharti/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/xpae-tech/sharti?style=flat-square" alt="License: MIT">
+    </a>
+    <img src="https://img.shields.io/badge/local--first-privacy-6A5ACD?style=flat-square" alt="Local-first and private">
+  </p>
+</div>
+
+<br>
+
 # Sharti
 
-Sharti is a private, local-first client for working with AI models. It can run models on your own Mac through the Splash inference engine, or connect to any OpenAI-compatible API. Chats, settings and API keys never leave your computer.
+Sharti is a private, local-first client for working with AI models — and for getting practical work done with them. It can run models on your own Mac through the Splash inference engine, or connect to any OpenAI-compatible API. Chats, settings and API keys never leave your computer.
 
-## About
-
-Sharti gives you one calm place to chat with models, manage the ones running locally, and connect external providers when you need them. There is no account, no cloud sync and no telemetry. Everything is stored as plain files in a local data directory, so you stay in control of your conversations and credentials.
+Beyond that, Sharti is a working environment for agentic tasks. With the built-in **sharti-agent** toolkit, a model can inspect files, edit code, manage folders and run commands on your machine — with your approval at each step, or automatically when you prefer.
 
 ## Architecture at a glance
 
@@ -40,12 +56,13 @@ Sharti gives you one calm place to chat with models, manage the ones running loc
 - Watch token usage and generation speed while the model writes.
 - Stop a response at any time and retry the last turn.
 
-### Tools, plugins and MCP
+### Agentic tools, plugins and MCP
 
-- Enable the built-in `sharti-agent` plugin for local filesystem and command-line work: read, write, patch, append, list, create, move, rename and delete files and folders, inspect the environment, and run commands.
-- Approve tool calls before they run, or let them proceed automatically.
+- Enable the built-in `sharti-agent` plugin and let a model work directly with your machine: read, write and patch files, create, move, rename and delete files and folders, inspect the environment, and run shell commands.
+- Put it to work on everyday tasks — updating a config, renaming a batch of files, running a test suite, or working through a small refactor — without leaving the conversation.
+- Approve tool calls before they run, or let them proceed automatically; individual native tools can be disabled.
 - Add MCP servers through `mcp.json`, reload them after editing, and see each server's status and available tools.
-- Enable or disable individual native tools and review tool activity in the conversation.
+- Review tool activity directly in the conversation.
 
 ### Interface and privacy
 

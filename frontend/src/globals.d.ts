@@ -3,5 +3,10 @@
 
 declare module '*.css';
 
+declare module '*.svg' {
+  const src: string;
+  export default src;
+}
+
 /** Injected by Vite from package.json (see vite.config.ts). */
 declare const __APP_VERSION__: string;

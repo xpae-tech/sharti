@@ -19,6 +19,6 @@
     },
     "types": ["node"]
   },
-  "include": ["shared/**/*.ts", "backend/src/**/*.ts", "vite.config.ts"],
+  "include": ["shared/**/*.ts", "backend/src/**/*.ts", "tools/**/*.ts", "vite.config.ts"],
   "exclude": ["node_modules", "dist", "frontend"]
 }

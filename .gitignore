@@ -12,6 +12,10 @@ dist/
 .vscode/
 .idea/
 coverage/
+.readme-preview.html
+
+# Generated assets (rebuilt from SVG by tools/build-favicon.ts)
+frontend/assets/favicon.ico
 
 # Runtime data (chats, uploads, preferences, MCP configuration)
 /data/folders/*
